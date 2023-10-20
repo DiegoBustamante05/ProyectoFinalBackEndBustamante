@@ -1,0 +1,85 @@
+paths:
+  /api/products:
+    get:
+      summary: get all products
+      tags:
+        - Products
+      responses:
+        "200":
+          description: "Products"
+        "500":
+          description: "Something went wrong"
+    
+
+  /api/products/{pid}:
+    get:
+      summary: get a product by id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: id of the product you want to obtain
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "succes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: "product not found"
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 100
+        price:
+          type: number
+        thumbnails:
+          type: array
+          items:
+            type: string
+        code:
+          type: string
+          maxLength: 100
+          unique: true
+        stock:
+          type: number
+        category:
+          type: string
+          maxLength: 100
+        status:
+          type: boolean
+        owner:
+          type: string
+      required:
+        - title
+        - description
+        - price
+        - code
+        - stock
+        - category
+        - status
+      example:
+        title: "Amd Ryzen 9 7950X"
+        description: "Procesador AMD scket AM5"
+        price: 350000
+        code: "PAMD01"
+        stock: 2
+        category: "processors"
+        status: true
+        owner: 
+          level: premium
+          email: emailowner@gmail.com

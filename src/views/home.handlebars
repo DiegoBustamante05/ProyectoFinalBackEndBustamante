@@ -1,0 +1,47 @@
+<div>
+    {{#if firstName}}
+    <h3>Welcome {{firstName}} {{lastName}}</h3>
+    {{/if}}
+    <p id="cartId" style="display: none;">{{userCart}}</p>
+    <h1 class="text-center">{{title}}</h1>
+    <div class="container">
+        <div class="row">
+            {{#each products}}
+            <div class="col-md-4">
+                <div class="card text-center m-5">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p>stock: {{this.stock}}</p>
+                        <p class="card-text fw-bold">$ {{this.price}}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <form method="post" class="addCart">
+                            <button type="submit" class="btn btn-primary addToCart" id="cartAlert"   data-product-id="{{this.id}}">Add to
+                                Cart</button>
+                                
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <a href="/view/cart/{{userCart}}" class="btn btn-primary d-flex justify-content-center m-5">Ir al Carrito</a>
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">{{#if hasPrevPage}}
+                <a style='text-decoration: none' href='/view/products?page={{prevPage}}'> ⬅️Prev
+                    Page </a>
+                {{/if}}
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">Page: {{page}} </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">{{#if hasNextPage}}
+                <a style='text-decoration: none' href="/view/products?page={{nextPage}}&userCartId={{userCartId}}"> Next Page
+                    ➡️</a>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/main.js"></script>

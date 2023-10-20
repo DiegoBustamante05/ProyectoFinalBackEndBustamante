@@ -1,0 +1,40 @@
+paths:
+  /api/users:
+    get:
+      summary: get all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: "Users"
+        "500":
+          description: "Something went wrong"
+
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 100
+        lastName:
+          type: string
+          maxLength: 100
+        password:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          maxLength: 100
+          unique: true
+        role:
+          type: string
+        age:
+          type: number
+        lastConnection:
+          type: number
+        cart:
+          type: array
+      required:
+        - email

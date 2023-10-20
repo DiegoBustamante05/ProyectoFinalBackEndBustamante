@@ -1,0 +1,182 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Get a cart by id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: id of the cart you want to obtain
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Succes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "404":
+          description: "cart not found"
+  
+    put:
+          summary: update cart by id
+          tags:
+            - Carts
+          parameters:
+            - name: cid
+              in: path
+              description: cart id
+              required: true
+              schema:
+                type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Cart"
+          responses:
+            "200":
+              description: "cart updated"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/Cart"
+            "404":
+              description: "cart not found"
+  
+    delete:
+        summary: remove products from cart by their id
+        tags:
+          - Carts
+        parameters:
+          - name: cid
+            in: path
+            description: cart id to clear
+            required: true
+            schema:
+              type: string
+        responses:
+          "200":
+            description: "the cart was emptied"
+          "404": 
+            description: "cart not found"
+
+  /api/carts:
+    post:
+      summary: Create a cart
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+      responses:
+        "200":
+          description: "cart created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "500":
+          description: "Something went wrong"
+  
+  /api/carts/{cid}/purchase:
+    post:
+      summary: buy the cart whose id matches the one sent
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: id of the cart to buy
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Purchased"
+        "400":
+          description: "bad request"
+  
+
+  /api/carts/{cid}/product/{pid}:
+    put:
+      summary: Updates the quantity of a product in the cart by passing the cart id and the product id to be updated as parameters.
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: id of the cart to which you want to update the quantity of a product
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description:  id of the product for which you want to update the quantity
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: number
+              required:
+                - quantity
+      responses:
+        "200":
+          description: "product updated"
+        "400":
+          description: "Bad Request"
+
+    delete:
+      summary: delete a product by id within a cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: id of the cart from which you want to delete a product
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: id of the product you want to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "product deleted"
+        "400":
+          description: "bad request"
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              quantity:
+                type: number
+      required:
+        - products
+
