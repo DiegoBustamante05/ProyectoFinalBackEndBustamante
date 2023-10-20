@@ -11,7 +11,7 @@
     ]
   },
   "scripts": {
-    "start": "node src/server.js" PROD,
+    "start": "node src/server.js PROD",
     "dev": "nodemon src/server.js DEV"
   },
   "keywords": [],
